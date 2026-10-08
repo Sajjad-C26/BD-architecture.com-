@@ -31,19 +31,39 @@
         ::-webkit-scrollbar-track { background: #0A0A0A; }
         ::-webkit-scrollbar-thumb { background: #262626; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
-        .glass { background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .glass { background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
         .hero-bg-transition { transition: background-image 1.5s ease-in-out; }
     </style>
 </head>
 <body class="bg-dark text-gray-100 antialiased selection:bg-gold selection:text-black">
 
+    <!-- INTRO ANIMATION WINDOW -->
+    <div id="intro-screen" class="fixed inset-0 z-50 bg-dark flex flex-col items-center justify-center transition-all duration-700 ease-in-out">
+        <div class="text-center px-4">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-full border border-gold/40 flex items-center justify-center bg-dark-card animate-pulse">
+                <i class="fa-solid fa-compass-drafting text-gold text-3xl"></i>
+            </div>
+            <h1 class="font-cinzel text-3xl md:text-5xl tracking-[0.2em] text-white font-bold mb-3 uppercase">Gypsum Architect</h1>
+            <p class="text-gold text-xs md:text-sm tracking-[0.4em] uppercase mb-8">Interior Design & Architecture</p>
+            <button onclick="enterWebsite()" class="px-8 py-3 bg-gold text-black font-cinzel font-bold tracking-widest text-sm uppercase rounded hover:bg-gold-light transition duration-300 shadow-lg shadow-gold/25 cursor-pointer">
+                Enter Website <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- HEADER / NAVBAR -->
-    <header class="fixed top-0 left-0 right-0 z-40 glass border-b border-dark-border">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-40 glass border-b border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3">
-                <span class="font-cinzel text-xl font-bold tracking-wider text-white">GYPSUM ARCHITECT</span>
+                <div class="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center bg-dark-card">
+                    <i class="fa-solid fa-compass-drafting text-gold text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-cinzel text-lg md:text-xl font-bold tracking-wider text-white block leading-none">GYPSUM ARCHITECT</span>
+                    <span class="text-[10px] tracking-[0.3em] text-gold uppercase block mt-1">Interior Design</span>
+                </div>
             </a>
-            <nav class="hidden lg:flex items-center space-x-8 font-cinzel text-xs tracking-widest text-gray-300">
+            <nav class="hidden lg:flex items-center space-x-8 font-cinzel text-sm tracking-widest">
                 <a href="#expertise" class="hover:text-gold transition">Expertise</a>
                 <a href="#solutions" class="hover:text-gold transition">Smart Solutions</a>
                 <a href="#services" class="hover:text-gold transition">Services</a>
@@ -52,39 +72,54 @@
                 <a href="#journal" class="hover:text-gold transition">Journal</a>
             </nav>
             <div class="flex items-center gap-4">
-                <a href="#contact" class="px-6 py-2.5 bg-gold text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-gold-light transition">Let's Talk</a>
+                <a href="#contact" class="hidden sm:inline-block px-5 py-2.5 border border-gold text-gold hover:bg-gold hover:text-black font-cinzel text-xs uppercase tracking-widest transition duration-300 rounded">Let's Talk</a>
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-gold text-2xl p-2"><i class="fa-solid fa-bars"></i></button>
             </div>
+        </div>
+        <!-- Mobile Nav -->
+        <div id="mobile-menu" class="hidden lg:hidden glass border-t border-dark-border px-6 py-6 space-y-4 font-cinzel text-sm">
+            <a href="#expertise" onclick="toggleMobileMenu()" class="block hover:text-gold">Expertise</a>
+            <a href="#solutions" onclick="toggleMobileMenu()" class="block hover:text-gold">Smart Solutions</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block hover:text-gold">Services</a>
+            <a href="#projects" onclick="toggleMobileMenu()" class="block hover:text-gold">Projects</a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="block hover:text-gold">Reviews</a>
+            <a href="#journal" onclick="toggleMobileMenu()" class="block hover:text-gold">Journal</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-gold">Let's Talk</a>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(10,10,10,0.4), rgba(10,10,10,0.9)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');">
+    <!-- HERO SECTION WITH DYNAMIC BACKGROUND ROTATOR -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 bg-cover bg-center hero-bg-transition" style="background-image: linear-gradient(to bottom, rgba(10,10,10,0.6), rgba(10,10,10,0.9)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-black/40"></div>
         <div class="relative z-10 max-w-5xl mx-auto px-4 text-center py-20">
+            <span class="text-gold uppercase tracking-[0.3em] text-xs md:text-sm font-semibold mb-4 inline-block">Architecture & Luxury Living</span>
             <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-6">Interior design that <br><span class="text-gold italic font-normal">elevates everyday living</span></h1>
-            <p class="max-w-xl mx-auto text-gray-300 text-sm md:text-base font-light mb-10 leading-relaxed">We craft extraordinary interior environments that harmonize timeless architectural precision with modern aesthetic sophistication.</p>
-            <div class="flex justify-center gap-4">
-                <a href="#projects" class="px-8 py-4 bg-gold text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-gold-light transition">Explore Portfolio</a>
-                <a href="#contact" class="px-8 py-4 border border-white/30 text-white font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-white hover:text-black transition">Book Consultation</a>
+            <p class="max-w-2xl mx-auto text-gray-300 text-sm md:text-base font-light mb-10 leading-relaxed">We craft extraordinary interior environments that harmonize timeless architectural precision with modern aesthetic sophistication.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#projects" class="px-8 py-4 bg-gold text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-gold-light transition duration-300">Explore Portfolio</a>
+                <a href="#contact" class="px-8 py-4 border border-white/30 text-white font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-white hover:text-black transition duration-300">Book Consultation</a>
             </div>
         </div>
     </section>
 
     <!-- EXPERTISE SECTION -->
-    <section id="expertise" class="py-24 bg-dark-card/40 border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="expertise" class="py-24 bg-dark-card/50 border-t border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white mb-6">Our expertise in design and precision craft</h2>
-                    <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed mb-6">Every space tells a unique story. At Gypsum Architect Interior, we blend meticulous spatial planning with bespoke material selections to curate sanctuaries of unmatched elegance.</p>
-                    <ul class="space-y-3 text-sm font-light text-gray-300">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-gold"></i> Bespoke Gypsum & False Ceiling Masterpieces</li>
+                    <span class="text-gold uppercase tracking-[0.2em] text-xs font-semibold">Our Philosophy</span>
+                    <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white mt-2 mb-6">Our expertise in design and precision craft</h2>
+                    <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed mb-6">Every space tells a unique story. At Gypsum Architect Interior, we blend meticulous spatial planning with bespoke material selections to curate sanctuaries of unmatched elegance and comfort.</p>
+                    <ul class="space-y-4 text-sm font-light text-gray-300 mb-8">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-gold"></i> Bespoke Gypsum & Ceiling Masterpieces</li>
                         <li class="flex items-center gap-3"><i class="fa-solid fa-check text-gold"></i> Architectural Space Optimization</li>
                         <li class="flex items-center gap-3"><i class="fa-solid fa-check text-gold"></i> Premium Lighting & Ambient Engineering</li>
                     </ul>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-gold font-cinzel text-xs uppercase tracking-widest hover:text-white transition">Start Your Project <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80" class="rounded-lg shadow-xl object-cover h-64 w-full">
-                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80" class="rounded-lg shadow-xl object-cover h-64 w-full mt-8">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80" alt="Design Craft" class="rounded-lg shadow-xl object-cover h-64 w-full">
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80" alt="Interior Space" class="rounded-lg shadow-xl object-cover h-64 w-full mt-8">
                 </div>
             </div>
         </div>
@@ -92,28 +127,29 @@
 
     <!-- SMART SOLUTIONS SECTION -->
     <section id="solutions" class="py-24 bg-dark border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white">Smart interior solutions for modern living</h2>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-gold uppercase tracking-[0.2em] text-xs font-semibold">Innovation</span>
+                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white mt-2">Smart interior solutions for modern living</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-dark-card border border-dark-border p-6 rounded-lg">
-                    <div class="text-gold text-2xl mb-4"><i class="fa-solid fa-lightbulb"></i></div>
+                <div class="bg-dark-card border border-dark-border p-6 rounded-lg hover:border-gold/50 transition">
+                    <div class="w-12 h-12 rounded bg-gold/10 flex items-center justify-center text-gold mb-4"><i class="fa-solid fa-lightbulb text-xl"></i></div>
                     <h3 class="font-cinzel text-lg font-bold text-white mb-2">Automated Lighting</h3>
                     <p class="text-gray-400 text-xs font-light leading-relaxed">Dynamic mood lighting tailored seamlessly to daily routines and architectural accents.</p>
                 </div>
-                <div class="bg-dark-card border border-dark-border p-6 rounded-lg">
-                    <div class="text-gold text-2xl mb-4"><i class="fa-solid fa-couch"></i></div>
+                <div class="bg-dark-card border border-dark-border p-6 rounded-lg hover:border-gold/50 transition">
+                    <div class="w-12 h-12 rounded bg-gold/10 flex items-center justify-center text-gold mb-4"><i class="fa-solid fa-couch text-xl"></i></div>
                     <h3 class="font-cinzel text-lg font-bold text-white mb-2">Modular Ergonomics</h3>
                     <p class="text-gray-400 text-xs font-light leading-relaxed">Custom built-ins and smart space-saving furniture maximizing luxury and utility.</p>
                 </div>
-                <div class="bg-dark-card border border-dark-border p-6 rounded-lg">
-                    <div class="text-gold text-2xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="bg-dark-card border border-dark-border p-6 rounded-lg hover:border-gold/50 transition">
+                    <div class="w-12 h-12 rounded bg-gold/10 flex items-center justify-center text-gold mb-4"><i class="fa-solid fa-shield-halved text-xl"></i></div>
                     <h3 class="font-cinzel text-lg font-bold text-white mb-2">Acoustic Engineering</h3>
                     <p class="text-gray-400 text-xs font-light leading-relaxed">Sound-absorbing wall panels and architectural ceilings for absolute tranquility.</p>
                 </div>
-                <div class="bg-dark-card border border-dark-border p-6 rounded-lg">
-                    <div class="text-gold text-2xl mb-4"><i class="fa-solid fa-temperature-arrow-up"></i></div>
+                <div class="bg-dark-card border border-dark-border p-6 rounded-lg hover:border-gold/50 transition">
+                    <div class="w-12 h-12 rounded bg-gold/10 flex items-center justify-center text-gold mb-4"><i class="fa-solid fa-temperature-arrow-up text-xl"></i></div>
                     <h3 class="font-cinzel text-lg font-bold text-white mb-2">Climate Harmony</h3>
                     <p class="text-gray-400 text-xs font-light leading-relaxed">Concealed HVAC vents and smart climate sensors integrated into interior cornices.</p>
                 </div>
@@ -122,12 +158,13 @@
     </section>
 
     <!-- SERVICES SECTION -->
-    <section id="services" class="py-24 bg-dark-card/40 border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white">Complete interior services for modern spaces</h2>
+    <section id="services" class="py-24 bg-dark-card/50 border-t border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-gold uppercase tracking-[0.2em] text-xs font-semibold">What We Do</span>
+                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white mt-2">Complete interior services for modern spaces</h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-dark border border-dark-border p-8 rounded-lg">
                     <span class="text-gold font-cinzel text-xs font-bold tracking-widest">01 / SERVICE</span>
                     <h3 class="font-cinzel text-xl font-bold text-white mt-3 mb-3">Residential Design</h3>
@@ -140,22 +177,24 @@
                 </div>
                 <div class="bg-dark border border-dark-border p-8 rounded-lg">
                     <span class="text-gold font-cinzel text-xs font-bold tracking-widest">03 / SERVICE</span>
-                    <h3 class="font-cinzel text-xl font-bold text-white mt-3 mb-3">Gypsum & Ceilings</h3>
+                    <h3 class="font-cinzel text-xl font-bold text-white mt-3 mb-3">Gypsum & False Ceilings</h3>
                     <p class="text-gray-400 text-xs font-light leading-relaxed">Intricate sculptural ceiling designs and architectural molding execution.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROJECTS PORTFOLIO SECTION -->
+    <!-- PROJECTS PORTFOLIO SECTION (Dynamic from Firestore) -->
     <section id="projects" class="py-24 bg-dark border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-end mb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
                 <div>
-                    <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white">Modern interior projects for inspired living</h2>
+                    <span class="text-gold uppercase tracking-[0.2em] text-xs font-semibold">Portfolio</span>
+                    <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white mt-2">Modern interior projects for inspired living</h2>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Fallback Static Projects (Dynamically managed from Admin too) -->
                 <div class="bg-dark-card border border-dark-border rounded-lg overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" class="h-64 w-full object-cover">
                     <div class="p-6">
@@ -182,21 +221,22 @@
     </section>
 
     <!-- CLIENT REVIEWS -->
-    <section id="reviews" class="py-24 bg-dark-card/40 border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white">Designed with purpose, loved by clients</h2>
+    <section id="reviews" class="py-24 bg-dark-card/50 border-t border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-gold uppercase tracking-[0.2em] text-xs font-semibold">Testimonials</span>
+                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white mt-2">Designed with purpose, loved by clients</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-dark border border-dark-border p-8 rounded-lg">
-                    <div class="text-gold mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="text-gray-300 text-sm font-light italic mb-6">"Gypsum Architect transformed our bare apartment into a breathtaking sanctuary. Their attention to lighting is world-class."</p>
+                    <div class="text-gold mb-4 text-sm"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-gray-300 text-sm font-light italic mb-6">"Gypsum Architect transformed our bare apartment into a breathtaking sanctuary. Their attention to ceiling lighting and material blending is world-class."</p>
                     <h4 class="font-cinzel font-bold text-white text-sm">Tanvir Ahmed</h4>
                     <span class="text-xs text-gray-500">Gulshan Villa Owner</span>
                 </div>
                 <div class="bg-dark border border-dark-border p-8 rounded-lg">
-                    <div class="text-gold mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="text-gray-300 text-sm font-light italic mb-6">"Absolute perfection in execution and communication. The automated solutions made our office stand out completely."</p>
+                    <div class="text-gold mb-4 text-sm"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-gray-300 text-sm font-light italic mb-6">"Absolute perfection in execution and communication. The smart automated solutions they implemented made our corporate office stand out completely."</p>
                     <h4 class="font-cinzel font-bold text-white text-sm">Farhan Chowdhury</h4>
                     <span class="text-xs text-gray-500">Managing Director, Aura Group</span>
                 </div>
@@ -206,9 +246,10 @@
 
     <!-- JOURNAL -->
     <section id="journal" class="py-24 bg-dark border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white">Stories, trends & ideas for beautiful spaces</h2>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-gold uppercase tracking-[0.2em] text-xs font-semibold">Insights</span>
+                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white mt-2">Stories, trends & ideas for beautiful spaces</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-dark-card border border-dark-border rounded-lg overflow-hidden">
@@ -239,41 +280,314 @@
         </div>
     </section>
 
-    <!-- LET'S TALK / FOOTER -->
-    <section id="contact" class="py-24 bg-dark-card/40 border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6">
+    <!-- CONTACT / LET'S TALK SECTION -->
+    <section id="contact" class="py-24 bg-dark-card/50 border-t border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div>
-                    <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-white mb-6">Let's talk</h2>
-                    <p class="text-gray-400 text-sm font-light mb-8">Reach out to our principal architects for inquiries or project orders.</p>
-                    <div class="space-y-4 text-sm text-gray-300">
-                        <div><i class="fa-solid fa-phone text-gold mr-3"></i> +880 1700-000000</div>
-                        <div><i class="fa-solid fa-envelope text-gold mr-3"></i> contact@gypsumarchitect.com</div>
-                        <div><i class="fa-solid fa-location-dot text-gold mr-3"></i> Gulshan Avenue, Dhaka, Bangladesh</div>
+                    <span class="text-gold uppercase tracking-[0.2em] text-xs font-semibold">Get in Touch</span>
+                    <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-white mt-2 mb-6">Let's talk about your vision</h2>
+                    <p class="text-gray-400 text-sm font-light mb-8">Reach out to our principal architects for inquiries, consultation bookings, or project orders.</p>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-center gap-4 text-gray-300"><i class="fa-solid fa-phone text-gold w-5"></i> <span id="display-phone">+880 1700-000000</span></div>
+                        <div class="flex items-center gap-4 text-gray-300"><i class="fa-solid fa-envelope text-gold w-5"></i> <span id="display-email">contact@gypsumarchitect.com</span></div>
+                        <div class="flex items-center gap-4 text-gray-300"><i class="fa-solid fa-location-dot text-gold w-5"></i> <span>Gulshan Avenue, Dhaka, Bangladesh</span></div>
                     </div>
-                    <div class="flex gap-4 mt-8 text-gold">
-                        <a href="https://wa.me/8801700000000" target="_blank" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center hover:bg-gold hover:text-black transition"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="https://m.me/" target="_blank" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center hover:bg-gold hover:text-black transition"><i class="fa-brands fa-facebook-messenger"></i></a>
-                        <a href="https://instagram.com/" target="_blank" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center hover:bg-gold hover:text-black transition"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="tel:+8801700000000" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center hover:bg-gold hover:text-black transition"><i class="fa-solid fa-phone"></i></a>
+                    <!-- Live Social & Contact Links -->
+                    <div class="flex gap-4 mt-8">
+                        <a id="link-whatsapp" href="https://wa.me/8801700000000" target="_blank" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-black transition"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a id="link-messenger" href="https://m.me/" target="_blank" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-black transition"><i class="fa-brands fa-facebook-messenger"></i></a>
+                        <a id="link-instagram" href="https://instagram.com/" target="_blank" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-black transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a id="link-call" href="tel:+8801700000000" class="w-10 h-10 rounded-full bg-dark border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-black transition"><i class="fa-solid fa-phone"></i></a>
                     </div>
                 </div>
                 <div class="bg-dark border border-dark-border p-8 rounded-lg">
-                    <h3 class="font-cinzel text-xl font-bold text-white mb-6">Send an Inquiry</h3>
-                    <form onsubmit="alert('Inquiry sent!'); event.preventDefault();" class="space-y-4">
-                        <input type="text" placeholder="Your Name" required class="w-full bg-dark-card border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
-                        <input type="text" placeholder="Email or Phone" required class="w-full bg-dark-card border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
-                        <textarea rows="4" placeholder="Project Details" required class="w-full bg-dark-card border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold"></textarea>
-                        <button type="submit" class="w-full py-4 bg-gold text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-gold-light transition">Submit</button>
+                    <h3 class="font-cinzel text-xl font-bold text-white mb-6">Send an Inquiry / Order</h3>
+                    <form id="inquiry-form" onsubmit="submitInquiry(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Your Name</label>
+                            <input type="text" id="inquiry-name" required class="w-full bg-dark-card border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Email or Phone</label>
+                            <input type="text" id="inquiry-contact" required class="w-full bg-dark-card border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Project Details</label>
+                            <textarea id="inquiry-message" rows="4" required class="w-full bg-dark-card border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-gold text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-gold-light transition duration-300 cursor-pointer">Submit Inquiry</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-dark border-t border-dark-border py-8 text-center text-xs text-gray-500 font-cinzel tracking-widest">
-        &copy; 2026 GYPSUM ARCHITECT INTERIOR. ALL RIGHTS RESERVED.
+    <!-- LIVE VISITOR CHAT WIDGET -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleChatWindow()" id="chat-toggle-btn" class="w-14 h-14 rounded-full bg-gold text-black flex items-center justify-center text-2xl shadow-2xl hover:scale-105 transition cursor-pointer"><i class="fa-solid fa-comments"></i></button>
+        <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 md:w-96 bg-dark-card border border-dark-border rounded-xl shadow-2xl overflow-hidden flex flex-col h-[450px]">
+            <div class="bg-dark p-4 border-b border-dark-border flex justify-between items-center">
+                <span class="font-cinzel text-sm font-bold text-white flex items-center gap-2"><i class="fa-solid fa-circle text-green-500 text-[10px]"></i> Gypsum Support</span>
+                <button onclick="toggleChatWindow()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+                <div class="bg-dark p-3 rounded-lg border border-dark-border max-w-[85%] text-gray-300">Hello! Welcome to Gypsum Architect Interior. How can we assist with your project today?</div>
+            </div>
+            <div class="p-3 bg-dark border-t border-dark-border flex gap-2">
+                <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 bg-dark-card border border-dark-border rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-gold">
+                <button onclick="sendChatMessage()" class="px-4 py-2 bg-gold text-black rounded font-bold text-xs hover:bg-gold-light cursor-pointer"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark border-t border-dark-border py-12 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-cinzel tracking-widest text-gray-400 mb-4">&copy; 2026 GYPSUM ARCHITECT INTERIOR. ALL RIGHTS RESERVED.</p>
+            <p><a href="#admin" onclick="openAdminModal()" class="text-gold hover:underline cursor-pointer">Admin Panel Login</a></p>
+        </div>
     </footer>
 
+    <!-- ADMIN LOGIN / DASHBOARD MODAL -->
+    <div id="admin-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-dark-card border border-dark-border rounded-xl max-w-4xl w-full p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            
+            <!-- Login View -->
+            <div id="admin-login-view">
+                <h3 class="font-cinzel text-2xl font-bold text-white mb-6 text-center">Admin Portal</h3>
+                <form onsubmit="adminLogin(event)" class="space-y-4 max-w-md mx-auto">
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Admin Email</label>
+                        <input type="email" id="admin-email" required class="w-full bg-dark border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Password</label>
+                        <input type="password" id="admin-password" required class="w-full bg-dark border border-dark-border rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold">
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-gold text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded hover:bg-gold-light transition cursor-pointer">Login to Dashboard</button>
+                </form>
+            </div>
+
+            <!-- Dashboard View -->
+            <div id="admin-dashboard-view" class="hidden">
+                <div class="flex justify-between items-center mb-8 border-b border-dark-border pb-4">
+                    <h3 class="font-cinzel text-xl font-bold text-white">Admin Control Dashboard</h3>
+                    <button onclick="adminLogout()" class="px-4 py-2 bg-red-600/20 text-red-400 border border-red-600/40 rounded text-xs hover:bg-red-600 hover:text-white transition cursor-pointer">Logout</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-dark border border-dark-border p-6 rounded-lg">
+                        <h4 class="font-cinzel font-bold text-white text-sm mb-2">Inquiries / Orders</h4>
+                        <div id="admin-inquiries-list" class="space-y-2 text-xs text-gray-300 max-h-40 overflow-y-auto">Loading...</div>
+                    </div>
+                    <div class="bg-dark border border-dark-border p-6 rounded-lg">
+                        <h4 class="font-cinzel font-bold text-white text-sm mb-2">Live Visitor Chats</h4>
+                        <div id="admin-chats-list" class="space-y-2 text-xs text-gray-300 max-h-40 overflow-y-auto">Loading...</div>
+                    </div>
+                    <div class="bg-dark border border-dark-border p-6 rounded-lg">
+                        <h4 class="font-cinzel font-bold text-white text-sm mb-2">Manage Projects</h4>
+                        <form onsubmit="addNewProject(event)" class="space-y-3 mb-4">
+                            <input type="text" id="new-proj-title" placeholder="Project Title" required class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-xs text-white">
+                            <input type="text" id="new-proj-category" placeholder="Category" required class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-xs text-white">
+                            <input type="url" id="new-proj-image" placeholder="Image URL" required class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-xs text-white">
+                            <button type="submit" class="w-full py-2 bg-gold text-black font-bold text-xs rounded cursor-pointer">Add Project</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Contact Links & Background Manager -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-dark border border-dark-border p-6 rounded-lg">
+                        <h4 class="font-cinzel font-bold text-white text-sm mb-4">Manage Contact Links & Phone</h4>
+                        <form onsubmit="updateContactInfo(event)" class="space-y-3 text-xs">
+                            <input type="text" id="cfg-phone" placeholder="Phone Number" class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-white">
+                            <input type="url" id="cfg-wa" placeholder="WhatsApp Link" class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-white">
+                            <input type="url" id="cfg-messenger" placeholder="Messenger Link" class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-white">
+                            <input type="url" id="cfg-instagram" placeholder="Instagram Link" class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-white">
+                            <button type="submit" class="w-full py-2 bg-gold text-black font-bold rounded cursor-pointer">Save Contact Info</button>
+                        </form>
+                    </div>
+                    <div class="bg-dark border border-dark-border p-6 rounded-lg">
+                        <h4 class="font-cinzel font-bold text-white text-sm mb-4">Manage Hero Background Images</h4>
+                        <form onsubmit="updateHeroBackgrounds(event)" class="space-y-3 text-xs">
+                            <textarea id="cfg-hero-imgs" rows="4" placeholder="Enter image URLs separated by comma" class="w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-white"></textarea>
+                            <button type="submit" class="w-full py-2 bg-gold text-black font-bold rounded cursor-pointer">Update Backgrounds</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE & MAIN SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmJbF9XJYNuA@gEGzzPXNQJrW2vPXC5hg",
+            authDomain: "gypsum-architect.firebaseapp.com",
+            projectId: "gypsum-architect",
+            storageBucket: "gypsum-architect.appspot.com",
+            messagingSenderId: "49890731126",
+            appId: "1:69890731126:web:a985eec17fcccc0fba4357"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.enterWebsite = function() {
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0';
+            intro.style.visibility = 'hidden';
+            setTimeout(() => { intro.style.display = 'none'; }, 700);
+        }
+
+        window.toggleMobileMenu = function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        window.toggleChatWindow = function() {
+            document.getElementById('chat-window').classList.toggle('hidden');
+        }
+
+        // Hero Background Rotator with Animation & Config Support
+        let heroImages = [
+            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1920&q=80'
+        ];
+        let currentBgIndex = 0;
+        setInterval(() => {
+            currentBgIndex = (currentBgIndex + 1) % heroImages.length;
+            document.getElementById('hero').style.backgroundImage = `linear-gradient(to bottom, rgba(10,10,10,0.6), rgba(10,10,10,0.9)), url('${heroImages[currentBgIndex]}')`;
+        }, 5000);
+
+        // Load Dynamic Projects from Firestore
+        async function loadProjects() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "projects"));
+                if(!querySnapshot.empty) {
+                    let html = '';
+                    querySnapshot.forEach((docSnap) => {
+                        let p = docSnap.data();
+                        html += `
+                        <div class="bg-dark-card border border-dark-border rounded-lg overflow-hidden relative group">
+                            <img src="${p.image}" class="h-64 w-full object-cover">
+                            <div class="p-6">
+                                <span class="text-gold text-[10px] tracking-widest uppercase font-cinzel">${p.category}</span>
+                                <h3 class="font-cinzel text-lg font-bold text-white mt-1">${p.title}</h3>
+                            </div>
+                        </div>`;
+                    });
+                    document.getElementById('projects-grid').innerHTML = html;
+                }
+            } catch(e) { console.log("Using default projects"); }
+        }
+        loadProjects();
+
+        window.submitInquiry = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('inquiry-name').value;
+            const contact = document.getElementById('inquiry-contact').value;
+            const message = document.getElementById('inquiry-message').value;
+            try {
+                await addDoc(collection(db, "inquiries"), { name, contact, message, timestamp: new Date() });
+                alert("Inquiry & Order submitted successfully to Admin!");
+                document.getElementById('inquiry-form').reset();
+            } catch(err) { alert("Error submitting inquiry."); }
+        }
+
+        window.sendChatMessage = async function() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if(!msg) return;
+            document.getElementById('chat-messages').innerHTML += `<div class="bg-gold/20 text-white p-3 rounded-lg ml-auto max-w-[85%]">${msg}</div>`;
+            input.value = '';
+            try {
+                await addDoc(collection(db, "chats"), { message: msg, sender: 'visitor', timestamp: new Date() });
+            } catch(e) {}
+        }
+
+        window.openAdminModal = function() { document.getElementById('admin-modal').classList.remove('hidden'); }
+        window.closeAdminModal = function() { document.getElementById('admin-modal').classList.add('hidden'); }
+
+        window.adminLogin = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const pass = document.getElementById('admin-password').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                document.getElementById('admin-login-view').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                loadAdminData();
+            } catch(err) { alert("Login failed: " + err.message); }
+        }
+
+        window.adminLogout = async function() {
+            await signOut(auth);
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            document.getElementById('admin-login-view').classList.remove('hidden');
+        }
+
+        function loadAdminData() {
+            onSnapshot(collection(db, "inquiries"), snapshot => {
+                let html = '';
+                snapshot.forEach(docSnap => {
+                    let d = docSnap.data();
+                    html += `<div class="bg-dark-card p-2 rounded border border-dark-border mb-2"><strong>${d.name}</strong> (${d.contact}): ${d.message}</div>`;
+                });
+                document.getElementById('admin-inquiries-list').innerHTML = html || 'No inquiries yet.';
+            });
+            onSnapshot(collection(db, "chats"), snapshot => {
+                let html = '';
+                snapshot.forEach(docSnap => {
+                    let d = docSnap.data();
+                    html += `<div class="bg-dark-card p-2 rounded border border-dark-border mb-2">${d.message}</div>`;
+                });
+                document.getElementById('admin-chats-list').innerHTML = html || 'No live chats yet.';
+            });
+        }
+
+        window.addNewProject = async function(e) {
+            e.preventDefault();
+            const title = document.getElementById('new-proj-title').value;
+            const category = document.getElementById('new-proj-category').value;
+            const image = document.getElementById('new-proj-image').value;
+            try {
+                await addDoc(collection(db, "projects"), { title, category, image });
+                alert("Project added successfully!");
+                e.target.reset();
+                loadProjects();
+            } catch(err) { alert("Error adding project"); }
+        }
+
+        window.updateContactInfo = function(e) {
+            e.preventDefault();
+            const phone = document.getElementById('cfg-phone').value;
+            const wa = document.getElementById('cfg-wa').value;
+            const messenger = document.getElementById('cfg-messenger').value;
+            const instagram = document.getElementById('cfg-instagram').value;
+            if(phone) {
+                document.getElementById('display-phone').innerText = phone;
+                document.getElementById('link-call').href = `tel:${phone}`;
+            }
+            if(wa) document.getElementById('link-whatsapp').href = wa;
+            if(messenger) document.getElementById('link-messenger').href = messenger;
+            if(instagram) document.getElementById('link-instagram').href = instagram;
+            alert("Contact links & phone updated successfully!");
+        }
+
+        window.updateHeroBackgrounds = function(e) {
+            e.preventDefault();
+            const val = document.getElementById('cfg-hero-imgs').value;
+            if(val) {
+                heroImages = val.split(',').map(s => s.trim());
+                alert("Hero background images updated!");
+            }
+        }
+    </script>
 </body>
 </html>
