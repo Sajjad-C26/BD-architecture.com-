@@ -93,7 +93,7 @@ const DEF={id:"main",brand:"Gypsum Architect Interior",h1:"Interior design that"
 tests:[{n:"Delbert Patterson",t:"From the very first sketch the studio felt calm, organised and precise. The finished home matches the render.",s:5},{n:"Sarah Ahmed",t:"Our office was delivered early and our team comments on the space every day.",s:5}]};
 const PAL=[["#d8cbb8","#b79a73","#a98f6e"],["#cfd2c4","#a88a62","#8a7a5e"],["#e0d3c2","#c1a47c","#7d6a58"]];
 const scene=(i,x='')=>{const p=PAL[i%3];return `<svg viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" style="--w:${p[0]};--f:${p[1]};--a:${p[2]}"><use href="#s"/></svg>`};
-window.$=$;async function isAdm(){try{return(await getDoc(doc(fs,"admins",au.currentUser.uid))).exists()}catch(e){return false}}
+window.$=$;async function isAdm(){try{return(await getDoc(doc(fs,"admins",au.currentUser.uid))).exists()}catch(e){window.__ae=e.code||String(e);return false}}
 let C={...DEF},P=[],H=[],MS=[],OR=[],cur=0,tm=null;
 async function ld(n){try{return(await getDocs(collection(fs,n))).docs.map(d=>({id:d.id,...d.data()}))}catch(e){console.warn(n,e.code);return[]}}
 async function put(n,o){try{await setDoc(doc(fs,n,o.id),o);return true}catch(e){console.warn(e);if(au.currentUser)alert("Could not save: "+e.code);return false}}
@@ -141,7 +141,7 @@ $("#ad").addEventListener("click",async e=>{const b=e.target.closest("[data-t],[
  drawAd()});
 $("#ad").addEventListener("change",async e=>{const s=e.target.closest("[data-a=st]");if(!s)return;const o=OR.find(x=>x.id===s.dataset.id);o.status=s.value;await put("orders",o)});
 $("#ad").addEventListener("submit",async e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f).entries());
- if(f.id==="lg"){try{await signInWithEmailAndPassword(au,d.e,d.p);if(!(await isAdm())){await signOut(au);throw 0}await loadAdmin()}catch(x){loginUI("Wrong email or password")}return}
+ if(f.id==="lg"){try{await signInWithEmailAndPassword(au,d.e,d.p);if(!(await isAdm())){await signOut(au);throw {code:"not-admin"+(window.__ae?":"+window.__ae:"")}}await loadAdmin()}catch(x){loginUI("Login failed: "+((x&&x.code)||"unknown error")+" | project: "+CFG.projectId)}return}
  if(f.id==="pwf"){if(d.n1!==d.n2){alert("New passwords do not match");return}try{await reauthenticateWithCredential(au.currentUser,EmailAuthProvider.credential(au.currentUser.email,d.cur));await updatePassword(au.currentUser,d.n1);alert("Password changed");f.reset()}catch(x){alert("Could not change. Check your current password.")}return}
  if(f.id==="emf"){try{await reauthenticateWithCredential(au.currentUser,EmailAuthProvider.credential(au.currentUser.email,d.cur));await verifyBeforeUpdateEmail(au.currentUser,d.ne);alert("Verification link sent to "+d.ne+". Open it, then log in with the new email.")}catch(x){alert("Could not change. Check your current password and the new email.")}return}
  if(f.id==="bf"){const k=d.kind==="press"?"press":"brands",logo=await logoShrink(f.logo.files[0]);(C[k]=C[k]||[]).push(logo?{n:d.name.trim(),logo}:{n:d.name.trim()});if(JSON.stringify(C).length>900000){alert("Too many or too large logos. Delete some first.");C[k].pop()}else await put("cfg",C)}
