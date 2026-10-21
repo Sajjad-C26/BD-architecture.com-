@@ -129,7 +129,7 @@ input[type=range]{width:100%;accent-color:var(--acc)}.exl{display:flex;gap:10px;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];window.$=$;
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const CFG={apiKey:"AIzaSyDmJbF9XJYNuA0gEGzzPXNQJrW2vPXC5hg",authDomain:"gypsum-architect.firebaseapp.com",projectId:"gypsum-architect",storageBucket:"gypsum-architect.firebasestorage.app",messagingSenderId:"69890731126",appId:"1:69890731126:web:a985eec17ffccc0fba4357"};
+const CFG={apiKey:"AIzaSyCKFYi9BbmzQPfiUjmwhmm-9rmrm9Bh3Sc",authDomain:"interior-architecture-95305.firebaseapp.com",projectId:"interior-architecture-95305",storageBucket:"interior-architecture-95305.firebasestorage.app",messagingSenderId:"69911121030",appId:"1:69911121030:web:ba30b209a040bf05b51507",measurementId:"G-Z6V5JB9BPX"};
 let fs=null,getDocs,collection,doc,setDoc;
 async function fbInit(){try{const B="https://www.gstatic.com/firebasejs/10.14.1/",[a,f]=await Promise.all([import(B+"firebase-app.js"),import(B+"firebase-firestore.js")]);({getDocs,collection,doc,setDoc}=f);fs=f.getFirestore(a.initializeApp(CFG));return true}catch(e){console.warn("firebase",e);return false}}
 async function ld(n){try{return(await getDocs(collection(fs,n))).docs.map(d=>({id:d.id,...d.data()}))}catch(e){return[]}}
