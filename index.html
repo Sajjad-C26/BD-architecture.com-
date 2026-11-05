@@ -229,4 +229,10 @@ const mega=$("#mega"),exp=$("#exp");exp.onclick=e=>{e.stopPropagation();const o=
 const tgl=(b,c,t1,t2)=>{$(b).onclick=()=>{const o=$(c).classList.toggle("open");$(b).textContent=o?t2:t1}};
 render();intro();route();
 (async()=>{await fbInit();const cf=(await ld("cfg")).find(x=>x.id==="main");C={...DEF,...(cf||{})};P=(await ld("projects")).sort((a,b)=>b.ts-a.ts);H=(await ld("hero")).sort((a,b)=>a.ts-b.ts);render();route(true)})();
-</script></body></html>
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  addEventListener("load", () => navigator.serviceWorker.register("sw.js"));
+}
+</script>
+</body></html>
